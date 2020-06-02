@@ -21,21 +21,19 @@ const deleteToDo = (id) => {
   };
 };
 const reducer = (state = [], action) => {
-  console.log(action);
   switch (action.type) {
     case ADD_TODO:
-      return [{text: action.text, id: Date.now() }, ...state];
+      const newToDo = {text: action.text, id: Date.now() }
+      return [newToDo, ...state];
     case DELETE_TODO:
-      return state.filter(toDo => toDo.id !== action.id);
+      const cleaned = state.filter(toDo => toDo.id !== action.id)
+      return cleaned;
     default:
       return state;
   }
 };
 
 const store = createStore(reducer);
-
-store.subscribe(() => console.log(store.getState()));
-
 
 const dispatchAddToDo = (text) => {
   store.dispatch(addToDo(text));
