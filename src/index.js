@@ -26,7 +26,7 @@ const reducer = (state = [], action) => {
     case ADD_TODO:
       return [{text: action.text, id: Date.now() }, ...state];
     case DELETE_TODO:
-      return [];
+      return state.filter(toDo => toDo.id !== action.id);
     default:
       return state;
   }
@@ -42,7 +42,7 @@ const dispatchAddToDo = (text) => {
 };
 
 const dispatchDeleteToDo = (e) => {
-  const id = e.target.parentNode.id;
+  const id = parseInt(e.target.parentNode.id);
   store.dispatch(deleteToDo(id))
 };
 
@@ -53,7 +53,7 @@ const paintToDos = () => {
     const li = document.createElement('li');
     const btn = document.createElement('button');
     btn.innerText = "DEL";
-    btn.addEventListener('click', deleteToDo);
+    btn.addEventListener('click', dispatchDeleteToDo);
     li.id = todo.id;
     li.innerText = todo.text;
     li.appendChild(btn);
@@ -66,7 +66,7 @@ const onSubmit = e => {
   e.preventDefault();
   const toDo = input.value;
   input.value = "";
-  addToDo(toDo);
+  dispatchAddToDo(toDo);
 };
 
 form.addEventListener("submit", onSubmit);
