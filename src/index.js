@@ -13,6 +13,13 @@ const addToDo = (text) => {
     text: text
   };
 };
+
+const deleteToDo = (id) => {
+  return {
+    type: DELETE_TODO, 
+    id
+  };
+};
 const reducer = (state = [], action) => {
   console.log(action);
   switch (action.type) {
@@ -34,9 +41,9 @@ const dispatchAddToDo = (text) => {
   store.dispatch(addToDo(text));
 };
 
-const deleteToDo = (e) => {
+const dispatchDeleteToDo = (e) => {
   const id = e.target.parentNode.id;
-  store.dispatch( { type: DELETE_TODO, id })
+  store.dispatch(deleteToDo(id))
 };
 
 const paintToDos = () => {
